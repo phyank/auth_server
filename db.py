@@ -6,15 +6,37 @@ TITLE=2
 URL=3
 ARTICLE_REPORT=4
 
+class Record:
+    def __init__(self,rid=None,title=None,url=None,content=None,wordlist=None,fingerprint=None):
+        self.rid=rid
+        self.title=title
+        self.url=url
+        self.content=content
+        self.wordlist=wordlist
+        self.fingerprint=fingerprint
+        self.recommend=None
+        self.stopwordPic=None
+        self.realwordPic=None
+        self.ldaPic=None
+        self.glovePic=None
+        self.symVectorPic=None
+        self.fingerprintPic=None
+        self.ifFailed=False
+        self.exeInfo=None
+
+
+
+
+
 class Database:
     def __init__(self,max_record_number):
         self.db={}
         self.get=deque()
         self.max=max_record_number
 
-    def put_result(self,id,name,title,url,report):
+    def put_result(self,id,title,url,content,wordlist,fingerprint):
         self.try_to_clean_db()
-        self.db[id]=(id,name,title,url,report)
+        self.db[id]=Record(id,title,url,content,wordlist,fingerprint)
 
     def get_result(self,id):
         self.try_to_clean_db()

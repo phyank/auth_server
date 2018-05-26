@@ -11,24 +11,20 @@ def runspider(url):
         print("Spider:open url wrong")
         raise OpenURLException
 
-    try:
-        soup = BeautifulSoup(html.read(),'lxml')
-        title = soup.find('h2',{'class':"rich_media_title"}).get_text().strip()
-        pattern = re.compile(r"<span class=\'rich_media_title_ios\'>(.*?)</span>")
-        title = re.search(pattern,title).groups()[0]
-        content = soup.find('div',{'class':"rich_media_content"}).get_text().strip()
-        content.replace('\xa0', '')
-        article = {
-            'url': url,
-            'title': title,
-            'content': content
-        }
-        return article
-    except BaseException as e:
-        print("Spider:parse wrong\n",str(e))
-        parseException=ParseException()
-        parseException.args=str(e)
-        raise parseException
+
+    soup = BeautifulSoup(html.read(),'lxml')
+    title = soup.find('h2',{'class':"rich_media_title"}).get_text().strip()
+    pattern = re.compile(r"<span class=\'rich_media_title_ios\'>(.*?)</span>")
+    title = re.search(pattern,title).groups()[0]
+    content = soup.find('div',{'class':"rich_media_content"}).get_text().strip()
+    content.replace('\xa0', '')
+    article = {
+        'url': url,
+        'title': title,
+        'content': content
+    }
+    return article
+
 
 if __name__ == "__main__":
     url = 'https://mp.weixin.qq.com/s/bjkmpigQNlwow4AhW3wdqw'

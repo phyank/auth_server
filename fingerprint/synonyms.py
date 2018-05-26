@@ -191,7 +191,7 @@ def cmp_article(id,learn_set,title,url,wordlist):
             else:
                 break
 
-        report['wordanalysis']=result
+        report['wordanalysis']=wordAnalysis
         report['error']=False
 
         return report

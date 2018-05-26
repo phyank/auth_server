@@ -46,7 +46,7 @@ class BaseHandler(tornado.web.RequestHandler):
         self.finish("<html><title>%(code)d: %(message)s</title>"
                     "<body>%(code)d: %(message)s</body></html>" % {
                         "code": status_code,
-                        "message": kwargs['content'] if kwargs else '',
+                        "message": kwargs['content'] if 'content' in kwargs else '',
                     })
 
 # class PostHandler(BaseHandler):
@@ -114,7 +114,7 @@ class PostURLHandler(BaseHandler):
                 self.write(str(request_id))
 
         except BaseException as e:
-             self.write_error(500,content='Not caught by inner except:\n'+str(e.args))
+            self.write_error(500,content='Not caught by inner except:\n'+str(e))
 
 class IDvsAccountHandler(BaseHandler):
     def get(self):
@@ -124,6 +124,8 @@ class IDvsAccountHandler(BaseHandler):
         try:
             account,rid=self.get_body_argument('account'),int(self.get_body_argument('id'))
 
+            print('Get account name:',account)
+            account=kanji_to_set(account)
             similarity=get_similarity(rid,account)
             error=False
             with dbMutex:
@@ -146,9 +148,10 @@ class IDvsAccountHandler(BaseHandler):
 
                 self.set_header("Content-Type", "application/json; charset=UTF-8")
                 self.write(json.dumps(response_json))
-
+        except WrongLearingSetError:
+            self.write_error(404, content='Account not found.')
         except BaseException as e:
-            self.write_error(500,content=str(e.args))
+            self.write_error(500,content=str(e))
 
 class AnalysisHandler(BaseHandler):
     def post(self):

@@ -81,6 +81,24 @@ def make_class_member_dict(dict):
     return class_member_dict
 
 
+def kanji_to_set(str):
+    if str=='机器之心':
+        return 'jqzx.csv'
+    elif str=='大数据文摘':
+        return 'dsjwz.csv'
+    elif str=='果壳网':
+        return 'gkw.csv'
+    elif str== 'Vista看天下':
+        return 'ktx.csv'
+    elif str=='咪蒙':
+        return 'mm.csv'
+    elif str=='侠客岛':
+        return 'xkd.csv'
+    elif str=='新世相':
+        return 'xsx.csv'
+    else:
+        return str
+
 class OpenURLException(Exception):
     pass
 class ParseException(Exception):

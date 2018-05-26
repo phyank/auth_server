@@ -126,6 +126,9 @@ class IDvsAccountHandler(BaseHandler):
             with dbMutex:
                 record=mainDB.get_result(rid)
                 if record==0:
+                    title=''
+                    url=''
+                    wordlist=''
                     error=True
                 else:
                     title=record.title
@@ -137,6 +140,8 @@ class IDvsAccountHandler(BaseHandler):
                 comment=cmp_article(rid,account,title,url,wordlist)
 
                 response_json={'sim':similarity,'symsim':comment['dif'],'support':str(comment['s1'])+'of'+str(comment['s2']),'comment':comment['wordanalysis']}
+
+                self.set_header("Content-Type", "application/json; charset=UTF-8")
                 self.write(json.dumps(response_json))
 
         except BaseException as e:
@@ -208,6 +213,7 @@ class RecommendHandler(BaseHandler):
                 if result==None:
                     self.write_error(404,content='Not done yet.')
                 else:
+                    self.set_header("Content-Type", "application/json; charset=UTF-8")
                     self.write(json.dumps(result))
 
 

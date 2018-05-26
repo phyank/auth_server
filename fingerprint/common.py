@@ -81,5 +81,7 @@ def make_class_member_dict(dict):
     return class_member_dict
 
 
-class OpenURLError(Exception):
+class OpenURLException(Exception):
+    pass
+class ParseException(Exception):
     pass

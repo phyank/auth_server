@@ -99,10 +99,13 @@ class PostURLHandler(BaseHandler):
     def post(self, *args, **kwargs):
         try:
             url=self.get_body_argument('url')
+
             try:
                 article=runspider(url)
-            except OpenURLError as e:
-                self.write_error(500,content=str(e))
+            except OpenURLException:
+                self.write_error(500,content="Failed to open URL.")
+            except ParseException:
+                self.write_error(500, content="Failed to parse article.")
             else:
                 with mainMutex:
                     request_id=mainStatus.get_request_id()
@@ -111,7 +114,7 @@ class PostURLHandler(BaseHandler):
                 self.write(str(request_id))
 
         except BaseException as e:
-            self.write_error(500,content=str(e.args))
+             self.write_error(500,content='Not caught by inner except:\n'+str(e.args))
 
 class IDvsAccountHandler(BaseHandler):
     def get(self):

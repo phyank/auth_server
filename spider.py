@@ -2,12 +2,14 @@ from urllib import request
 from bs4 import BeautifulSoup
 import re
 
+from fingerprint.common import *
+
 def runspider(url):
     try:
         html = request.urlopen(url)
     except:
         print("Spider:open url wrong")
-        return
+        raise OpenURLException
 
     try:
         soup = BeautifulSoup(html.read(),'lxml')
@@ -22,8 +24,11 @@ def runspider(url):
             'content': content
         }
         return article
-    except Exception as e:
-        print("Spider:parse wrong\n",e)
+    except BaseException as e:
+        print("Spider:parse wrong\n",str(e))
+        parseException=ParseException()
+        parseException.args=str(e)
+        raise parseException
 
 if __name__ == "__main__":
     url = 'https://mp.weixin.qq.com/s/bjkmpigQNlwow4AhW3wdqw'

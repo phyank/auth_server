@@ -1,6 +1,6 @@
 #{'learn':name,'check':id,'diff':-1,'s1':-1,'s2':-1,'report':'wrong learing set!','error':False}
 
-import threading
+import threading,traceback
 
 #from fingerprint.pyltp_cut import *
 from fingerprint.jieba_cut import *
@@ -36,6 +36,7 @@ class CalcThread(threading.Thread):
                     _,_,strvir,ldavec, glovevec, symvec, fingerprint=get_fingerprint_vectors(id,content)
                 except BaseException as e:
                     print('Get fingerprint failed.\n'+str(e))
+                    traceback.print_exc()
                     with self.dbMutex:
                         self.db.put_result(id)
                         record=self.db.get_result(id)

@@ -83,7 +83,7 @@ class CalcThread(threading.Thread):
                         record.fingerprintPic=fingerprintPAddr
 
             except BaseException as e:
-                print(str(e))
+                print('ERROR: Something went wrong in thread, info: ',str(e))
 
 
 

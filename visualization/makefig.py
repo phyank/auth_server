@@ -1,8 +1,9 @@
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib
 from wordcloud import WordCloud
 
-
+matplotlib.use('Agg') #by default, the backend of matplotlib depends on GUI. Use Agg instead.
+import matplotlib.pyplot as plt
 
 # 传入的vector是float数组，数组元素0-1之间
 # path是图片保存路径

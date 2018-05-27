@@ -2,8 +2,8 @@
 
 import threading
 
-from fingerprint.pyltp_cut import *
-#from fingerprint.jieba_cut import *
+#from fingerprint.pyltp_cut import *
+from fingerprint.jieba_cut import *
 from fingerprint.synonyms import *
 from fingerprint.clustering import *
 from visualization.makefig import *

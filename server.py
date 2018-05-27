@@ -1,4 +1,4 @@
-import tornado.ioloop,tornado.web
+import tornado.ioloop,tornado.web,tornado.escape
 from queue import Queue
 import threading,json
 from tornado import gen
@@ -192,7 +192,7 @@ class AnalysisHandler(BaseHandler):
                 if result==None:
                     self.write_error(404,content='Not done yet')
                 else:
-                    self.write(result)
+                    self.write(tornado.escape.url_escape(result))
 
 class RecommendHandler(BaseHandler):
     def post(self):

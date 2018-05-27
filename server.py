@@ -126,8 +126,9 @@ class IDvsAccountHandler(BaseHandler):
 
             print('Get account name:',account)
             account=kanji_to_set(account)
-            similarity=get_similarity(rid,account)
+
             error=False
+            fingerprint=None
             with dbMutex:
                 record=mainDB.get_result(rid)
                 if record==0:
@@ -139,9 +140,11 @@ class IDvsAccountHandler(BaseHandler):
                     title=record.title
                     url=record.url
                     wordlist=record.wordlist.split()
+                    fingerprint = deepcopy(record.fingerprint)
             if error:
                 self.write_error(404,content='id not found')
             else:
+                similarity = get_sim(fingerprint, account)
                 comment=cmp_article(rid,account,title,url,wordlist)
 
                 response_json={'sim':similarity,'symsim':comment['dif'],'support':str(comment['s1'])+'of'+str(comment['s2']),'comment':comment['wordanalysis']}
@@ -164,11 +167,18 @@ class AnalysisHandler(BaseHandler):
             self.write_error(403,content='Wrong argument.\n'+str(e))
         else:
             error=False
+            errormsg=''
+
             with dbMutex:
                 record=mainDB.get_result(rid)
                 if record==0:
                     result=''
                     error=True
+                    errormsg='Wrong id or wrong content type'
+                elif record.ifFailed:
+                    result=''
+                    error=True
+                    errormsg = 'Get fingerprint vector failed.'
                 else:
                     if content == 'stopword':
                         result=record.stopwordPic
@@ -187,7 +197,7 @@ class AnalysisHandler(BaseHandler):
                         error=True
 
             if error:
-                self.write_error(404,content='Wrong id or wrong content type')
+                self.write_error(404,content=errormsg)
             else:
                 if result==None:
                     self.write_error(404,content='Not done yet')

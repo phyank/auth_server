@@ -24,7 +24,7 @@ def make_original_dataset():
 #这个函数将哈工大同义词林转换为一个python字典，并返回。
 def make_dict():
 
-    wordlist = open(HLP_LL_DIR, 'rb').readlines()
+    wordlist = open(HLP_LL_ADDR, 'rb').readlines()
 
     decodedwl = []
 
@@ -44,7 +44,7 @@ def make_dict():
             for word in line:
                 dict[word] = [word, father, i]
 
-    with open(DICT_PICKLE_DIR,'wb') as pfile:
+    with open(DICT_PICKLE_ADDR,'wb') as pfile:
         pickle.dump(dict,pfile,2)
 
     print("Make dict success.")
@@ -54,7 +54,7 @@ def make_dict():
 #这个函数将传入字符串中的实词提取出，并返回包含这些实词的字符串，词以空格分隔。
 def get_real_words(str1):
         seg = jieba.posseg.cut(str1)
-        punc = open(PUNC_DIR, 'rb')
+        punc = open(PUNC_ADDR, 'rb')
         pr = punc.read()
         pr = pr.decode('gbk')
         p = pr.split()

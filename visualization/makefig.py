@@ -3,7 +3,8 @@ import matplotlib
 from wordcloud import WordCloud
 
 matplotlib.use('Agg') #by default, the backend of matplotlib depends on GUI. Use Agg instead.
-import matplotlib.pyplot as plt
+
+import matplotlib.pyplot
 
 # 传入的vector是float数组，数组元素0-1之间
 # path是图片保存路径
@@ -14,16 +15,16 @@ def create_vector_graph(vector,path):
     radii = vector
     width = np.pi / N
 
-    ax = plt.subplot(111, projection='polar')
+    ax = matplotlib.pyplot.subplot(111, projection='polar')
     ax.axes.get_yaxis().set_ticklabels([])
     bars = ax.bar(theta, radii, width=width, bottom=0.0)
 
     for r, bar in zip(radii, bars):
-        bar.set_facecolor(plt.cm.gnuplot(r))
+        bar.set_facecolor(matplotlib.pyplot.cm.gnuplot(r))
         bar.set_alpha(0.8)
 
     try:
-        plt.savefig(path)
+        matplotlib.pyplot.savefig(path)
         return 0
         # 用于显示图片
         # plt.show()
@@ -35,7 +36,7 @@ def create_vector_graph(vector,path):
 # path为图片保存路径
 def create_wordcloud(text,path):
     try:
-        bg = plt._imread('visualization/background.jpg')
+        bg = matplotlib.pyplot._imread('visualization/background.jpg')
     except:
         print('read background picture failed')
         return -1

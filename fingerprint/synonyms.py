@@ -20,7 +20,7 @@ class_member_dict=make_class_member_dict(dict)
 
 vector_class=[]
 
-with open(CLASS_RANKING_DIR, 'r') as f:
+with open(CLASS_RANKING_ADDR, 'r') as f:
     lines = f.readlines()
 
 records = []
@@ -41,7 +41,7 @@ for learn_set in database:
         wordlist = file1.read().split()
     dataset_dict[learn_set]=wordlist
 
-with open(PCA_MODEL_DIR,'rb') as modelfile:
+with open(PCA_MODEL_ADDR,'rb') as modelfile:
     pca=pickle.loads(modelfile.read())
 
 #######################################
@@ -252,8 +252,8 @@ def get_fingerprint_slice(reall):
     countDict = run_single(reall, dict)
     vector = get_vector(dict, class_member_dict, countDict, 3000)
 
-    array=np.ndarray([vector])
+    array=np.array(vector)
+    ddarray=np.array([array])
+    new_vector=pca.transform(ddarray)
 
-    new_vector=pca.transform(array)
-
-    return new_vector
+    return new_vector[0]

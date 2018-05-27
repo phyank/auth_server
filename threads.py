@@ -33,8 +33,9 @@ class CalcThread(threading.Thread):
                         continue
 
                 try:
-                    fingerprint=get_fingerprint(id,content)
+                    _,_,strvir,ldavec, glovevec, symvec, fingerprint=get_fingerprint_vectors(id,content)
                 except BaseException as e:
+                    print('Get fingerprint failed.\n'+str(e))
                     with self.dbMutex:
                         self.db.put_result(id)
                         record=self.db.get_result(id)
@@ -45,27 +46,27 @@ class CalcThread(threading.Thread):
                 with self.dbMutex:
                     self.db.put_result(id,title,url,content,wordlist,fingerprint)
 
-                recommend=get_recommend(id)
+                recommend=get_recommend(fingerprint)
                 with self.dbMutex:
                     (self.db.get_result(id)).recommend=recommend
 
                 stopwordPAddr=TARGET_IMG_DIR+str(id)+'stopword.jpg'
-                stopwordImgResult=create_wordcloud('哈哈 拉拉',stopwordPAddr)
+                stopwordImgResult=create_wordcloud(strvir,stopwordPAddr)
 
                 realwordPAddr=TARGET_IMG_DIR+str(id)+'realword.jpg'
-                realwordImgResult=create_wordcloud('天啊 地阿',realwordPAddr)
+                realwordImgResult=create_wordcloud(wordlist,realwordPAddr)
 
                 ldaPAddr=TARGET_IMG_DIR+str(id)+'lda.jpg'
-                ldaImgReuslt=create_vector_graph([0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5],ldaPAddr)
+                ldaImgReuslt=create_vector_graph(ldavec,ldaPAddr)
 
                 glovePAddr=TARGET_IMG_DIR+str(id)+'glove.jpg'
-                gloveImgResult=create_vector_graph([0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5],glovePAddr)
+                gloveImgResult=create_vector_graph(glovevec,glovePAddr)
 
                 sym2PAddr=TARGET_IMG_DIR+str(id)+'sym2.jpg'
-                sym2ImgResult=create_vector_graph([0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5],sym2PAddr)
+                sym2ImgResult=create_vector_graph(symvec,sym2PAddr)
 
                 fingerprintPAddr=TARGET_IMG_DIR+str(id)+'fingerprint.jpg'
-                fingerprintImgResult=create_vector_graph([0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5],fingerprintPAddr)
+                fingerprintImgResult=create_vector_graph(fingerprint,fingerprintPAddr)
 
                 with self.dbMutex:
                     record=self.db.get_result(id)

@@ -9,13 +9,22 @@ ROOT_DIR='fingerprint/'
 CHK_ARTICLE_REPORT_DIR=ROOT_DIR+'data/result/chk_article_hit/'
 CUT_FILE_DIR=ROOT_DIR+'data/cut_hit/'
 CUT_DATASET_FILE=ROOT_DIR+'data/pickle/cut_dataset_hit.pickle'
-DICT_PICKLE_DIR=ROOT_DIR+'data/pickle/dict.pickle'
-PASSDICT_PICKLE_DIR=ROOT_DIR+'data/pickle/pass_dict.pickle'
-PCA_MODEL_DIR=ROOT_DIR+'data/pickle/model.pickle'
+DICT_PICKLE_ADDR=ROOT_DIR+'data/pickle/dict.pickle'
+PASSDICT_PICKLE_ADDR=ROOT_DIR+'data/pickle/pass_dict.pickle'
+PCA_MODEL_ADDR=ROOT_DIR+'data/pickle/model.pickle'
 
-HLP_LL_DIR=ROOT_DIR+'data/knowledge/hlp_ll.txt'
-PUNC_DIR=ROOT_DIR+'data/knowledge/punctuation.txt'
-CLASS_RANKING_DIR=ROOT_DIR+'data/knowledge/classes.txt'
+HLP_LL_ADDR=ROOT_DIR+'data/knowledge/hlp_ll.txt'
+PUNC_ADDR=ROOT_DIR+'data/knowledge/punctuation.txt'
+CLASS_RANKING_ADDR=ROOT_DIR+'data/knowledge/classes.txt'
+
+VECTOR_DATABASE_ADDR=ROOT_DIR+'data/knowledge/vectordatabase.txt'
+ENCODER_MODEL_ADDR=ROOT_DIR+'data/knowledge/encoderModel.h5'
+NEW_ARTICLE_CACHE_DIR=ROOT_DIR+'newArticleCache/'
+LDA_MODEL_ADDR=ROOT_DIR+'data/knowledge/ldamodel.txt'
+LDA_ORIGIN_VC_ADDR=ROOT_DIR+'data/knowledge/ldaoriginvc.txt'
+GLOVE_SAVE_ADDR=ROOT_DIR+'data/knowledge/gloveSave.txt'
+TFIDF_VECTO_ADDR=ROOT_DIR+'data/knowledge/tfidf_vecto.txt'
+IFIDF_TRANSF_ADDR=ROOT_DIR+"data/knowledge/ifidf_transf.txt"
 
 TARGET_IMG_DIR='static/img/'
 
@@ -48,13 +57,13 @@ def get_cut_dataset():
     return cut_dataset
 
 def get_dict():
-    with open(DICT_PICKLE_DIR,'rb') as pfile:
+    with open(DICT_PICKLE_ADDR,'rb') as pfile:
         dict=pickle.load(pfile)
 
     return dict
 
 def get_pass_dict():
-    with open(PASSDICT_PICKLE_DIR,'rb') as pfile:
+    with open(PASSDICT_PICKLE_ADDR,'rb') as pfile:
         dict=pickle.load(pfile)
 
     return dict
@@ -103,3 +112,8 @@ class OpenURLException(Exception):
     pass
 class ParseException(Exception):
     pass
+
+class TODOException(Exception):
+    def __init__(self,*args,**kwargs):
+        Exception.__init__(self)
+        self.args=('ERROR','You forgot to do something.')

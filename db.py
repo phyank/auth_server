@@ -34,7 +34,7 @@ class Database:
         self.get=deque()
         self.max=max_record_number
 
-    def put_result(self,id,title,url,content,wordlist,fingerprint):
+    def put_result(self,id,title=None,url=None,content=None,wordlist=None,fingerprint=None):
         self.try_to_clean_db()
         self.db[id]=Record(id,title,url,content,wordlist,fingerprint)
 

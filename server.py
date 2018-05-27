@@ -137,10 +137,14 @@ class IDvsAccountHandler(BaseHandler):
                     wordlist=''
                     error=True
                 else:
-                    title=record.title
-                    url=record.url
-                    wordlist=record.wordlist.split()
-                    fingerprint = deepcopy(record.fingerprint)
+                    if record.ifFailed:
+                        self.write_error(500,content='Request failed. info:'+record.exeInfo)
+                        return
+                    else:
+                        title=record.title
+                        url=record.url
+                        wordlist=record.wordlist.split()
+                        fingerprint = deepcopy(record.fingerprint)
             if error:
                 self.write_error(404,content='id not found')
             else:

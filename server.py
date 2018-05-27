@@ -192,7 +192,7 @@ class AnalysisHandler(BaseHandler):
                 if result==None:
                     self.write_error(404,content='Not done yet')
                 else:
-                    self.write(tornado.escape.url_escape(result))
+                    self.write(result)
 
 class RecommendHandler(BaseHandler):
     def post(self):

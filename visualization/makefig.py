@@ -25,6 +25,7 @@ def create_vector_graph(vector,path):
 
     try:
         matplotlib.pyplot.savefig(path)
+        matplotlib.pyplot.close('all')
         return 0
         # 用于显示图片
         # plt.show()
@@ -41,8 +42,15 @@ def create_wordcloud(text,path):
         print('read background picture failed')
         return -1
     wc = WordCloud(font_path="visualization/msyh.ttc", mask=bg, background_color='white', max_font_size=80)
-    wc.generate(text)
 
+    wordlist=text.split()
+    text=''
+    for word in wordlist:
+        if word[:2]=='填充':
+            word=word[2:]
+        text+=word+' '
+
+    wc.generate(text)
     wc.to_file(path)
     # 用于显示图片
     # plt.imshow(wc)

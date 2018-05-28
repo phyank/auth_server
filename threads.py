@@ -67,7 +67,11 @@ class CalcThread(threading.Thread):
                 sym2ImgResult=create_vector_graph(symvec,sym2PAddr)
 
                 fingerprintPAddr=TARGET_IMG_DIR+str(id)+'fingerprint.jpg'
-                fingerprintImgResult=create_vector_graph(fingerprint,fingerprintPAddr)
+
+                fingerprint2=deepcopy(fingerprint)
+                normalize(fingerprint2)
+
+                fingerprintImgResult=create_vector_graph(fingerprint2,fingerprintPAddr)
 
                 with self.dbMutex:
                     record=self.db.get_result(id)

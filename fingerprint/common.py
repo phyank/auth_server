@@ -126,6 +126,19 @@ def set_to_kanji(str):
     else:
         return str
 
+def normalize(vec):
+    minimum = 100
+    maximum = -100
+    for item in vec:
+        if item < minimum:
+            minimum = item
+        if item > maximum:
+            maximum = item
+    for i in range(len(vec)):
+        vec[i] = 0.01 + 0.99 * (vec[i] - minimum) / (maximum - minimum)
+    # print(vec)
+    return
+
 
 class OpenURLException(Exception):
     pass

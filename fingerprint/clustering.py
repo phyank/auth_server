@@ -191,20 +191,6 @@ def fitGloVe(strreal, id1):
     return docvec
 
 
-def normalize(vec):
-    minimum = 100
-    maximum = -100
-    for item in vec:
-        if item < minimum:
-            minimum = item
-        if item > maximum:
-            maximum = item
-    for i in range(len(vec)):
-        vec[i] = 0.01 + 0.99 * (vec[i] - minimum) / (maximum - minimum)
-    # print(vec)
-    return
-
-
 def fitVAE(glovevec, ldavec, symvec, id1):
 
     inputVec = []

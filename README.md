@@ -2,8 +2,8 @@
 
 Install:
 
-  1. git clone https://github.com/phyank/auth_server
-  2. sudo ./preinstall.sh
+    1. git clone https://github.com/phyank/auth_server
+    2. sudo ./preinstall.sh
 
 Start:
 

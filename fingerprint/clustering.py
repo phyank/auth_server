@@ -307,7 +307,7 @@ def get_recommend(altovec, topn=20):
     # feedback:[num,title,url,vector,account,copyTag]
     result=[]
     for article in feedback:
-        result.append({'id':article[0],'imgurl':TEST_IMG,'accountname':article[4],'title':article[1],'url':article[2],'ifcopy':article[5]})
+        result.append({'id':article[0],'imgurl':ACCOUNT_ICO_DIR+article[4]+'.jpg','accountname':set_to_kanji(article[4]),'title':article[2],'url':article[1],'ifcopy':article[5]})
     return result
 
 

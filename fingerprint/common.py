@@ -28,7 +28,7 @@ IFIDF_TRANSF_ADDR=ROOT_DIR+"data/knowledge/ifidf_transf.txt"
 
 TARGET_IMG_DIR='static/img/'
 
-TEST_IMG='/static/img/test.jpg'
+ACCOUNT_ICO_DIR='static/ico/'
 
 WORD=0
 CLASS=1
@@ -107,6 +107,25 @@ def kanji_to_set(str):
         return 'xsx.csv'
     else:
         return str
+
+def set_to_kanji(str):
+    if str=='jqzx.csv':
+        return '机器之心'
+    elif str=='dsjwz.csv':
+        return '大数据文摘'
+    elif str=='gkw.csv':
+        return '果壳网'
+    elif str== 'ktx.csv':
+        return 'Vista看天下'
+    elif str=='mm.csv':
+        return '咪蒙'
+    elif str=='xkd.csv':
+        return '侠客岛'
+    elif str=='xsx.csv':
+        return '新世相'
+    else:
+        return str
+
 
 class OpenURLException(Exception):
     pass

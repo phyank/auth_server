@@ -8,4 +8,4 @@ mkdir static
 mkdir static/img
 mkdir fingerprint/newArticleCache
 
-echo 'Preperation success.'
+echo 'Preparation success.'

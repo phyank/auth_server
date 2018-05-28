@@ -39,7 +39,17 @@ from sklearn.ensemble import IsolationForest
 from sklearn.utils import check_array
 
 from wordcloud import WordCloud
-
+##############################################init
+original_dim = 130
+intermediate_dim = 80
+latent_dim = 20
+x = Input(shape=(original_dim,))
+h = Dense(intermediate_dim, activation='relu', name="midh")(x)
+z_mean = Dense(latent_dim)(h)
+encoder = Model(x, z_mean)
+encoder.load_weights(ENCODER_MODEL_ADDR)
+encoder._make_predict_function()
+#############################################
 
 # get virtual word bag and real word bag
 # similar to cut.py
@@ -196,14 +206,7 @@ def normalize(vec):
 
 
 def fitVAE(glovevec, ldavec, symvec, id1):
-    original_dim = len(glovevec) + len(ldavec) + len(symvec)
-    intermediate_dim = 80
-    latent_dim = 20
-    x = Input(shape=(original_dim,))
-    h = Dense(intermediate_dim, activation='relu', name="midh")(x)
-    z_mean = Dense(latent_dim)(h)
-    encoder = Model(x, z_mean)
-    encoder.load_weights(ENCODER_MODEL_ADDR)
+
     inputVec = []
     inputVec.append([])
     normalize(glovevec)

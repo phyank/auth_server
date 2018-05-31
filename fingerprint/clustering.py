@@ -39,6 +39,9 @@ from sklearn.ensemble import IsolationForest
 from sklearn.utils import check_array
 
 from wordcloud import WordCloud
+
+COPY_THRESHOLD=1.5
+
 ##############################################init
 original_dim = 130
 intermediate_dim = 80
@@ -284,7 +287,7 @@ def get_recommend(altovec, topn=20):
                     tmp = feedback[j]
                     feedback[j] = feedback[j - 1]
                     feedback[j - 1] = tmp
-    threhold = 1
+    threhold = COPY_THRESHOLD
     for i in range(len(feedback)):
         if Mdistance(feedback[i][3], altovec) < threhold:
             feedback[i].append(True)
